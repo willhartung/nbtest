@@ -30,7 +30,7 @@ public class XyzDataNode extends DataNode {
     }
 
     private XyzDataNode(final XyzDataObject xyz, InstanceContent ic) throws IntrospectionException {
-        super(xyz, Children.LEAF, new AbstractLookup(ic));
+        super(xyz, Children.create(new XyzDataChildFactory(xyz), true), new AbstractLookup(ic));
         ic.add(new OpenCookie() {
             @Override
             public void open() {
@@ -57,6 +57,11 @@ public class XyzDataNode extends DataNode {
 
     @Override
     public Image getIcon(int type) {
+        return ImageUtilities.loadImage(ICON);
+    }
+    
+    @Override
+    public Image getOpenedIcon(int type) {
         return ImageUtilities.loadImage(ICON);
     }
 
