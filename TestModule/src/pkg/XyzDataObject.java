@@ -5,6 +5,7 @@
  */
 package pkg;
 
+import java.beans.IntrospectionException;
 import java.io.IOException;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
@@ -17,6 +18,7 @@ import org.openide.loaders.MultiDataObject;
 import org.openide.loaders.MultiFileLoader;
 import org.openide.nodes.Children;
 import org.openide.nodes.Node;
+import org.openide.util.Exceptions;
 import org.openide.util.Lookup;
 import org.openide.util.NbBundle.Messages;
 import org.openide.windows.TopComponent;
@@ -101,6 +103,13 @@ public class XyzDataObject extends MultiDataObject {
 
     @Override
     protected Node createNodeDelegate() {
-        return new XyzNode(this, Children.LEAF, getLookup());
+        XyzDataNode data = null;
+        try {
+            data = new XyzDataNode(this);
+        } catch (IntrospectionException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+        return data;
     }
+    
 }
